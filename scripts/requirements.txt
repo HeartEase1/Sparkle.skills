@@ -1,0 +1,11 @@
+# 夺舍.skill Python 脚本依赖
+# 安装命令：pip install -r scripts/requirements.txt
+
+# Wiki 内容获取（推荐）
+httpx>=0.27.0           # 异步 HTTP 客户端
+selectolax>=0.3.21      # 快速 HTML 解析器
+
+# 注意：
+# - 如果不安装依赖，仍可使用 markdown.new 服务或 urllib 标准库
+# - markdown.new 服务无需依赖，推荐优先使用
+# - httpx 和 selectolax 用于异步获取模式，性能更好

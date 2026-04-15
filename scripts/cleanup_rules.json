@@ -1,0 +1,28 @@
+{
+  "moegirl": {
+    "name": "萌娘百科",
+    "remove_patterns": [
+      "✦向着星辰与深渊✦",
+      "欢迎正在阅读这个条目的旅行者协助编辑本条目",
+      "编辑前请阅读提瓦特游览指南或骑士团指导手册·第五版",
+      "萌娘百科祝各位旅行者在本站度过愉快的时光！",
+      "游戏数据或信息的著作权属于上海米哈游天命科技有限公司，仅以介绍为目的引用",
+      "不允许添加官方未公开的游戏数据或信息",
+      "诚邀各位旅行者加入萌百米哈游编辑组，参与萌百米哈游相关条目编辑与讨论"
+    ],
+    "remove_sections": [],
+    "description": "萌娘百科清理规则"
+  },
+  "bwiki": {
+    "name": "BWIKI",
+    "remove_patterns": [],
+    "remove_sections": [],
+    "description": "BWIKI 清理规则"
+  },
+  "fandom": {
+    "name": "Fandom",
+    "remove_patterns": [],
+    "remove_sections": [],
+    "description": "Fandom 清理规则"
+  }
+}
