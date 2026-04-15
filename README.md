@@ -11,7 +11,7 @@
 > ——致敬崩坏：星穹铁道 花火（Sparkle）
 
 [![License MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![基于 possession-skill](https://img.shields.io/badge/基于-possession--skill-8A2BE2.svg)](https://github.com/possession-skill)
+[![基于 夺舍skill](https://img.shields.io/badge/基于-夺舍skill-8A2BE2.svg)](https://github.com/Summer907/possession-skill)
 [![支持游戏](https://img.shields.io/badge/支持游戏-原神_星铁-red.svg)](#支持游戏)
 [![长期记忆](https://img.shields.io/badge/长期记忆-越聊越还原-blue.svg)](#长期记忆系统)
 
@@ -25,7 +25,7 @@
 
 这正是本项目的核心理念：**从官方设定中提取角色灵魂，让AI完美化身为TA。**
 
-本项目重构自 [possession-skill](https://github.com/possession-skill)，保留其五维提取体系与证据分级机制，专注于**原神**与**崩坏：星穹铁道**两款游戏，并新增：
+本项目重构自**夺舍.skill**，保留其五维提取体系与证据分级机制，专注于**原神**与**崩坏：星穹铁道**两款游戏，并新增：
 
 - **纠错自动写入**：用户纠错后自动更新角色skill文件，无需手动操作
 - **长期记忆系统**：每个角色携带 `memory-log.md`，越聊越还原
@@ -34,7 +34,7 @@
 
 ---
 
-## 支持游戏
+## 支持游戏(理论上支持所有游戏)
 
 | 游戏 | 代号 | Wiki来源 |
 |------|------|---------|
@@ -223,7 +223,7 @@ Sparkle.skills/
 
 ## 致谢
 
-本项目重构自 [possession-skill](https://github.com/possession-skill)，致敬其「夺舍」理念与五维提取体系。
+本项目重构自 [possession-skill](https://github.com/Summer907/possession-skill)，致敬其「夺舍」理念与五维提取体系。
 
 花导的变身能力给了这个项目新的名字——她能变成任何人，而这个工具能让AI变成你想见的那个TA。
 
