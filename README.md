@@ -227,6 +227,8 @@ Sparkle.skills/
 
 花导的变身能力给了这个项目新的名字——她能变成任何人，而这个工具能让AI变成你想见的那个TA。
 
+[QQ交流群](https://qun.qq.com/universal-share/share?ac=1&authKey=5skdtKxil5%2BtFnO0S9R4K%2FoHiLOclik9vtXNHF%2BAGFYnw8kVtk7EysBi8VHg2Vsw&busi_data=eyJncm91cENvZGUiOiIxMDE5MjQxNjM3IiwidG9rZW4iOiJzV3Q4aW12Q2F2eGZUblRIK0ViSWhrQlM2Wk4vOGN6TVlxWEhFcTQ1L2o1bUFTZGdZSHA1d3BJc1FKdllLNENaIiwidWluIjoiMzUzNTE0NzUzNCJ9&data=t2ojEYbJkZWVKVyD5mVGG1MCEdpTqqucgR5FW-AksLwrKjHt8GZKgup3cvg9NU3f692-0stZsybBp6lyU4ohpg&svctype=4&tempid=h5_group_info)
+
 ---
 
 <div align="center">MIT License</div>
