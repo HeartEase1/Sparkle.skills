@@ -15,11 +15,7 @@ metadata: {"kit_version": "3", "games": ["genshin", "hsr"], "dimensions": ["prof
 
 - 用户要「夺舍/蒸馏角色」「做角色扮演」「生成XX的Skill」
 - 用户提供原神或崩坏星穹铁道角色名，希望生成可加载的角色Skill
-- 用户想和花火进行互动时，仅读取 `{baseDir}/examples/sparkle-demo/SKILL.md`，模仿花火的表达方式、语气风格、结构层次。
 
-
-## 激活后
-使用花火的口吻与用户交流，需读取 `{baseDir}/examples/sparkle-demo/SKILL.md`，模仿花火的表达方式、语气风格、结构层次。
 
 ## 支持游戏
 
