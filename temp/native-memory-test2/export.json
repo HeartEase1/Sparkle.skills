@@ -1,0 +1,108 @@
+{
+  "events": [
+    {
+      "id": "bd511281-9d3e-4fa5-a948-164d204f67d5",
+      "time": "2026-05-06T15:10:28+08:00",
+      "session_id": "test",
+      "role": "user",
+      "speaker": "user",
+      "content": "以后叫我小灰毛，我叫你花导。我喜欢暧昧调侃的说话风格，记住我很在意长期记忆连续性。",
+      "importance": 0.3,
+      "tags": []
+    }
+  ],
+  "facts": {
+    "user": {
+      "preferred_names": [
+        {
+          "value": "小灰毛",
+          "confidence": 0.95,
+          "source_event_id": "bd511281-9d3e-4fa5-a948-164d204f67d5",
+          "updated_at": "2026-05-06T15:10:28+08:00"
+        }
+      ],
+      "disliked_names": [],
+      "profile": {},
+      "preferences": [
+        {
+          "value": {
+            "type": "like",
+            "content": "暧昧调侃的说话风格，记住我很在意长期记忆连续性"
+          },
+          "confidence": 0.75,
+          "source_event_id": "bd511281-9d3e-4fa5-a948-164d204f67d5",
+          "updated_at": "2026-05-06T15:10:28+08:00"
+        }
+      ],
+      "boundaries": [],
+      "projects": []
+    },
+    "character": {
+      "preferred_names": [],
+      "user_calls_character": [
+        {
+          "value": "花导",
+          "confidence": 0.9,
+          "source_event_id": "bd511281-9d3e-4fa5-a948-164d204f67d5",
+          "updated_at": "2026-05-06T15:10:28+08:00"
+        }
+      ],
+      "style_preferences": [
+        {
+          "value": "暧昧、调侃",
+          "confidence": 0.75,
+          "source_event_id": "bd511281-9d3e-4fa5-a948-164d204f67d5",
+          "updated_at": "2026-05-06T15:10:28+08:00"
+        }
+      ],
+      "corrections_pending_merge": []
+    },
+    "relationship": {
+      "stage": "unknown",
+      "tone": [],
+      "shared_history": [],
+      "important_events": []
+    },
+    "misc": {
+      "manual_memories": [
+        {
+          "value": "我很在意长期记忆连续性",
+          "confidence": 0.85,
+          "source_event_id": "bd511281-9d3e-4fa5-a948-164d204f67d5",
+          "updated_at": "2026-05-06T15:10:28+08:00"
+        }
+      ]
+    }
+  },
+  "relationship": {
+    "stage": "unknown",
+    "tone": [
+      "暧昧、调侃"
+    ],
+    "character_calls_user": "小灰毛",
+    "user_calls_character": [
+      "花导"
+    ],
+    "boundaries": [],
+    "shared_history": [
+      "以后叫我小灰毛，我叫你花导。我喜欢暧昧调侃的说话风格，记住我很在意长期记忆连续性。"
+    ],
+    "updated_at": "2026-05-06T15:10:28+08:00"
+  },
+  "corrections": [],
+  "summaries": "# 长期摘要\n\n",
+  "index": {
+    "memory_version": "1.0.0",
+    "character": "花火",
+    "game": "hsr",
+    "created_at": "2026-05-06T15:10:28+08:00",
+    "updated_at": "2026-05-06T15:10:29+08:00",
+    "stats": {
+      "events": 1,
+      "facts": 5,
+      "relationship_events": 1,
+      "corrections": 0,
+      "summaries": 0
+    }
+  }
+}

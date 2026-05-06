@@ -1,6 +1,6 @@
 ---
 name: possession
-description: "原神/崩坏星穹铁道角色夺舍器：从官方设定蒸馏可扮演的角色灵魂，生成可直接加载的角色Skill，支持用户纠错自动写入与长期记忆。"
+description: "原神/崩坏星穹铁道角色夺舍器：从官方设定蒸馏可扮演的角色灵魂，生成可直接加载的角色Skill，支持用户纠错辅助与可选记忆协议。"
 license: MIT
 metadata: {"kit_version": "3", "games": ["genshin", "hsr"], "dimensions": ["profile","personality","interaction","memory","relations"]}
 ---
@@ -120,11 +120,15 @@ skills/<slug>/
 
 **核心机制**：纠错验证后**自动写入**对应角色的skill文件，无需用户手动操作。
 
-## 长期记忆
+## 可选记忆辅助协议
 
-每个角色skill携带 `memory-log.md`，读取 `{baseDir}/prompts/memory-system.md` 管理。
+生成的角色 Skill 可附带 `memory/` 目录与 `memory-log.md`，用于给支持文件写入或脚本调用的运行时接入。
 
-**核心机制**：对话中发现新的角色细节、用户纠错、扮演反馈，自动追加到 `memory-log.md`，角色越聊越还原。
+**重要限制**：Skills 本身通常不支持全自动长期记忆写入。如果加载程序没有主动读写 `memory/`，也没有调用 `{baseDir}/scripts/memory_runtime.py`，记忆不会自动增长。
+
+本功能应作为“可选运行时辅助协议”理解，不作为内置自动长期记忆宣传。
+
+读取 `{baseDir}/prompts/memory-system.md` 获取最小接入方式。
 
 ## 不做的事
 
@@ -132,3 +136,55 @@ skills/<slug>/
 - 不将用户理解覆盖官方设定
 - 不跳过扮演测试直接输出
 - 不生成到skills目录以外的位置
+
+
+### 全局记忆原则
+
+本 Skill 的长期记忆是**角色全局记忆**，不做多用户隔离。所有接入同一个角色 Skill 的程序和用户共享同一份 `memory/`，使该角色拥有连续统一的经历，而不是每个用户一套割裂记忆。
+
+### 记忆管理命令
+
+查看：
+
+```cmd
+python "{baseDir}\scripts\memory_runtime.py" list --skill-dir "{skillsDir}\{slug}" --kind all --limit 50
+```
+
+搜索：
+
+```cmd
+python "{baseDir}\scripts\memory_runtime.py" search --skill-dir "{skillsDir}\{slug}" --keyword "小灰毛"
+```
+
+删除单条事件：
+
+```cmd
+python "{baseDir}\scripts\memory_runtime.py" delete --skill-dir "{skillsDir}\{slug}" --event-id "事件ID"
+```
+
+导出：
+
+```cmd
+python "{baseDir}\scripts\memory_runtime.py" export --skill-dir "{skillsDir}\{slug}" --output "memory-export.json"
+```
+
+清空：
+
+```cmd
+python "{baseDir}\scripts\memory_runtime.py" clear --skill-dir "{skillsDir}\{slug}" --yes
+```
+
+### 自动摘要压缩策略
+
+运行时可在记录消息时启用自动摘要：
+
+```cmd
+python "{baseDir}\scripts\memory_runtime.py" record --skill-dir "{skillsDir}\{slug}" --role user --content "{消息}" --extract --auto-summary --summary-threshold 80 --keep-recent 30
+```
+
+策略：
+
+- 当 `events.jsonl` 事件数达到阈值时，自动把较早事件压缩进 `summaries.md`。
+- 默认保留最近 30 条事件作为近期上下文。
+- 原始事件默认不删除，保证“每一件事”仍可追溯。
+- 回复前使用 `context` 命令时，只注入结构化事实、关系状态、长期摘要摘录和最近事件，避免上下文爆炸。

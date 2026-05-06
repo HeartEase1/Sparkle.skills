@@ -4,220 +4,255 @@
 
 ### 花导想变成谁，就变成谁。
 
-### AI化身角色灵魂，让TA在你面前活过来。
+### AI 化身角色灵魂，让 TA 在你面前活过来。
 
-> "我可以变成任何人——但我选择变成你想见的那个TA。"
+> “我可以变成任何人——但我选择变成你想见的那个 TA。”
 >
-> ——致敬崩坏：星穹铁道 花火（Sparkle）
+> ——致敬《崩坏：星穹铁道》花火（Sparkle）
 
 [![License MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![基于 夺舍skill](https://img.shields.io/badge/基于-夺舍skill-8A2BE2.svg)](https://github.com/Summer907/possession-skill)
 [![支持游戏](https://img.shields.io/badge/支持游戏-原神_星铁-red.svg)](#支持游戏)
-[![长期记忆](https://img.shields.io/badge/长期记忆-越聊越还原-blue.svg)](#长期记忆系统)
 
 </div>
 
 ---
 
-## 为什么叫「花火」？
+## 简介
 
-花火是崩坏：星穹铁道中拥有**变身成他人**的能力——她可以完美模拟任何人的外貌、声音、行为举止，让对方信以为真。
+花火.skill 是一个面向角色扮演的 Skill 生成器。
 
-这正是本项目的核心理念：**从官方设定中提取角色灵魂，让AI完美化身为TA。**
+它从官方设定、角色台词、人物关系和剧情材料中提取角色信息，生成可被支持 Skills 的程序加载的角色 Skill，让 AI 更稳定地扮演指定角色。
 
-本项目重构自**夺舍.skill**，保留其五维提取体系与证据分级机制，专注于**原神**与**崩坏：星穹铁道**两款游戏，并新增：
+本项目重构自 **夺舍.skill**，保留五维提取体系与证据分级机制，主要面向：
 
-- **纠错自动写入**：用户纠错后自动更新角色skill文件，无需手动操作
-- **长期记忆系统**：每个角色携带 `memory-log.md`，越聊越还原
-- **提示词提炼**：一键将角色skill提炼为可直接粘贴的提示词
-- **平级输出**：生成的角色skill与本skill平级存放，AI可直接加载
+- 《原神》
+- 《崩坏：星穹铁道》
 
 ---
 
-## 支持游戏(理论上支持所有游戏)
+## 支持游戏
 
-| 游戏 | 代号 | Wiki来源 |
-|------|------|---------|
+| 游戏 | 代号 | Wiki 来源 |
+|------|------|----------|
 | 原神（Genshin Impact） | `genshin` | 萌娘百科 / BWIKI / Fandom |
 | 崩坏：星穹铁道（Honkai: Star Rail） | `hsr` | 萌娘百科 / BWIKI / Fandom |
+
+理论上也可以手动粘贴其他作品的设定材料进行蒸馏。
 
 ---
 
 ## 核心功能
 
-### 1. 角色夺舍（生成角色Skill）
+### 1. 生成角色 Skill
 
-对AI说：
-```
+示例：
+
+```text
 帮我夺舍芙宁娜
 蒸馏卡芙卡
-生成符玄的Skill
+生成遐蝶的Skill
 ```
 
-AI会引导你选择游戏和Wiki来源，自动获取设定，完成五维提取，生成可加载的角色skill目录。
+流程：
 
-**完整流程：**
-
+```text
+Phase 1  接收角色设定（Wiki 获取 / 手动粘贴）
+Phase 2  五维提取（profile / personality / interaction / memory / relations）
+Phase 3  冲突检查（写入 conflicts.md）
+Phase 4  生成角色 Skill 文件包
+Phase 5  输出生成路径和加载方式
+Phase 6  8 场景扮演测试
+Phase 7  质量评分报告
 ```
-Phase 1  接收角色设定（Wiki自动获取 / 手动粘贴）
-Phase 2  五维分维度提取（profile / personality / interaction / memory / relations）
-Phase 3  冲突检查（不同来源设定矛盾记录到 conflicts.md）
-Phase 4  生成Skill文件包
-Phase 5  告知用户生成路径与加载方式
-Phase 6  8场景扮演测试（通过率 ≥ 70% 为合格）
-Phase 7  质量评分报告（完整度 / 证据率 / 冲突数 / 测试通过率）
-```
-
----
 
 ### 2. 提示词提炼
 
-对AI说：
-```
+示例：
+
+```text
 把芙宁娜的skill提炼成提示词
 给我卡芙卡的提示词
 ```
 
-AI读取已生成的角色skill，输出包含以下7个章节的完整提示词，可直接粘贴到任意AI的系统提示位置：
+会读取已生成的角色 Skill，整理成可复制到其他 AI 的角色提示词。
 
-| 章节 | 内容 |
-|------|------|
-| 角色简介 | 身份、世界观定位、核心标签 |
-| 核心指令 | 扮演规则，防止OOC |
-| 深层内核记忆 | 最影响角色行为的底层经历与动机 |
-| 表层人格与语言风格 | 性格关键词、说话方式、标志性台词 |
-| 专属称呼体系 | 角色如何称呼各对象、自称方式 |
-| 绝对禁区 | 官方设定中的底线与触发点 |
-| 对话示例 | 3组场景对话，基于verbatim台词构造 |
+### 3. 用户纠错
 
----
+示例：
 
-### 3. 用户纠错（自动写入）
-
-对AI说：
-```
+```text
 这个设定不对，芙宁娜的生日应该是10月13日
 卡芙卡不是这样说话的，她更冷静
 ```
 
-**纠错流程：**
+纠错会根据来源与证据级别处理：
 
-1. AI识别纠错涉及的维度和条目
-2. 询问来源（官方Wiki / 游戏内文本 / 角色台词 / 个人理解）
-3. 验证来源，标注证据级别
-4. 展示修改预览（diff）
-5. 确认后**自动写入**对应skill文件 + memory-log.md
-
-**证据级别优先级：**
-
-```
+```text
 verbatim（角色原话）> artifact（官方设定）> user_impression（用户理解）
 ```
 
-`user_impression` 不覆盖官方设定，追加到末尾标注「用户补充」。
+用户理解不会覆盖官方设定，只会作为补充或反馈记录。
 
 ---
 
-### 4. 长期记忆系统
+## 关于长期记忆
 
-每个角色skill携带独立的 `memory-log.md`，以下情况自动追加：
+请注意：**Skills 本身通常不提供全自动长期记忆写入能力。**
 
-| 触发 | 类型 |
-|------|------|
-| 用户纠错并确认 | `correction` |
-| 对话中发现新角色细节 | `discovery` |
-| 扮演测试反馈 | `feedback` |
-| 用户补充印象 | `impression` |
+本项目可以在生成的角色 Skill 中附带一个可选的记忆目录和辅助脚本，用于给支持文件写入或脚本调用的运行时接入：
 
-积累 ≥ 20 条时，AI提示批量合并到维度文件。**角色越聊越还原。**
+```text
+memory/
+├── events.jsonl
+├── facts.json
+├── relationship.json
+├── corrections.jsonl
+├── summaries.md
+└── index.json
+```
+
+但这只是一个**可选的运行时辅助协议**，不是所有 Skills 程序都会自动使用它。
+
+如果加载 Skill 的程序没有主动读写这些文件，或没有调用 `scripts/memory_runtime.py`，那么长期记忆不会自动增长。
+
+适用场景：
+
+- 运行时支持文件读写；
+- 运行时支持调用 Python 脚本；
+- 或平台开发者愿意按该文件结构自行接入。
+
+不适用场景：
+
+- Skill 目录只读且没有外部状态目录；
+- 沙箱禁止文件写入；
+- 沙箱禁止脚本调用；
+- 程序只读取 `SKILL.md`，不支持任何持久化。
+
+简单示例：
+
+```bash
+python3 scripts/memory_runtime.py record \
+  --skill-dir "../xiadie-skill" \
+  --role user \
+  --content "以后叫我小灰毛" \
+  --extract
+```
+
+沙箱或只读目录可使用外部状态目录：
+
+```bash
+python3 scripts/memory_runtime.py record \
+  --skill-dir "/app/skills/xiadie-skill" \
+  --memory-dir "/app/state/xiadie-skill-memory" \
+  --role user \
+  --content "以后叫我小灰毛" \
+  --extract
+```
+
+如果你只使用普通 Skills 加载器，请把该功能理解为“可接入的辅助协议”，不要理解为内置自动记忆。
 
 ---
 
 ## 五维提取体系
 
-每个角色从官方设定中提取五个维度，每条标注证据级别：
+每个角色会被整理为五个维度：
 
-```
-profile       角色档案：基本信息、世界观定位、核心标签
+```text
+profile       角色档案：基本信息、身份、世界观定位
 personality   性格价值观：动机、核心矛盾、行为模式
-interaction   说话方式：口头禅、标志性台词、对话场景
-memory        背景故事：关键事件、成长经历、创伤与转折
+interaction   说话方式：语气、称呼、口头禅、台词
+memory        背景故事：关键事件、经历、创伤与转折
 relations     人际关系：重要角色与情感联结
 ```
 
-**证据级别：**
-- `verbatim` — 角色原话台词（最高权重）
-- `artifact` — 官方Wiki / 游戏内文本
-- `impression` — 其他角色的评价
+证据级别：
 
-矛盾的设定**不强行统一**，记录在 `conflicts.md`。
+- `verbatim`：角色原话；
+- `artifact`：官方设定 / 游戏内文本；
+- `impression`：其他角色评价；
+- `user_impression`：用户理解或补充。
 
 ---
 
 ## 生成结构
 
-生成的角色skill与本skill**平级**存放：
+生成的角色 Skill 与本 Skill 平级存放：
 
-```
+```text
 skill开发/
-├── Sparkle.skills/        ← 本skill
-└── <slug>/                ← 生成的角色skill（平级）
-    ├── SKILL.md           # 角色扮演入口，AI加载即可化身TA
-    ├── profile.md         # 角色档案
-    ├── personality.md     # 性格与价值观
-    ├── interaction.md     # 说话方式与台词
-    ├── memory.md          # 背景故事
-    ├── relations.md       # 人际关系
-    ├── memory-log.md      # 长期记忆日志（自动积累）
-    ├── conflicts.md       # 设定冲突记录
-    └── manifest.json      # 元数据与质量评分
+├── Sparkle.skills/
+└── <slug>/
+    ├── SKILL.md
+    ├── profile.md
+    ├── personality.md
+    ├── interaction.md
+    ├── memory.md
+    ├── relations.md
+    ├── conflicts.md
+    ├── manifest.json
+    ├── memory-log.md          # 可选：人类可读记录
+    └── memory/                # 可选：运行时记忆辅助协议
+        ├── events.jsonl
+        ├── facts.json
+        ├── relationship.json
+        ├── corrections.jsonl
+        ├── summaries.md
+        └── index.json
 ```
 
 ---
 
 ## 项目结构
 
-```
+```text
 Sparkle.skills/
-├── SKILL.md                      # 主入口
-├── prompts/                      # LLM Prompt模板
-│   ├── profile-extractor.md      # 角色档案提取
-│   ├── personality-extractor.md  # 性格提取
-│   ├── interaction-extractor.md  # 互动风格提取
-│   ├── memory-extractor.md       # 背景故事提取
-│   ├── relations-extractor.md    # 人际关系提取
-│   ├── skill-assembler.md        # Skill组装器
-│   ├── correction-handler.md     # 纠错处理器（自动写入）
-│   ├── memory-system.md          # 长期记忆系统
-│   ├── prompt-distiller.md       # 提示词提炼器
-│   └── roleplay-tester.md        # 扮演测试器
-├── recipes/                      # 方法论文档
-│   ├── wiki-sources.md           # Wiki数据源配置
-│   ├── merge-policy.md           # 设定冲突处理策略
-│   ├── quality-metrics.md        # 质量评分标准
+├── SKILL.md
+├── prompts/
+│   ├── profile-extractor.md
+│   ├── personality-extractor.md
+│   ├── interaction-extractor.md
+│   ├── memory-extractor.md
+│   ├── relations-extractor.md
+│   ├── skill-assembler.md
+│   ├── correction-handler.md
+│   ├── memory-system.md
+│   ├── prompt-distiller.md
+│   └── roleplay-tester.md
+├── recipes/
+│   ├── wiki-sources.md
+│   ├── merge-policy.md
+│   ├── quality-metrics.md
 │   └── ...
-├── scripts/                      # Python辅助脚本
-│   ├── fetch_wiki.py             # Wiki内容获取
-│   ├── quality_check.py          # 质量评分检查
+├── scripts/
+│   ├── fetch_wiki.py
+│   ├── quality_check.py
+│   ├── memory_runtime.py       # 可选记忆辅助 CLI
+│   ├── memory_store.py
+│   ├── memory_schema.py
 │   └── ...
-└── examples/                     # 示例角色skill
-    └── sparkle-demo/             # 花火示例
+└── examples/
 ```
 
 ---
 
 ## 质量评分
 
-每次生成后自动计算综合评分：
-
 | 维度 | 权重 | 说明 |
 |------|------|------|
 | 完整度 | 30% | 五维度覆盖情况 |
 | 证据率 | 40% | verbatim + artifact 占比 |
 | 冲突数 | 10% | 设定冲突数量 |
-| 测试通过率 | 20% | 8场景扮演测试结果 |
+| 测试通过率 | 20% | 8 场景扮演测试结果 |
 
-评级：`≥0.85` 优秀 / `0.70-0.84` 良好 / `0.60-0.69` 及格 / `<0.60` 不合格
+评级：
+
+```text
+≥ 0.85      优秀
+0.70-0.84   良好
+0.60-0.69   及格
+< 0.60      不合格
+```
 
 ---
 
@@ -225,9 +260,7 @@ Sparkle.skills/
 
 本项目重构自 [possession-skill](https://github.com/Summer907/possession-skill)，致敬其「夺舍」理念与五维提取体系。
 
-花导的变身能力给了这个项目新的名字——她能变成任何人，而这个工具能让AI变成你想见的那个TA。
-
-[QQ交流群](https://qun.qq.com/universal-share/share?ac=1&authKey=5skdtKxil5%2BtFnO0S9R4K%2FoHiLOclik9vtXNHF%2BAGFYnw8kVtk7EysBi8VHg2Vsw&busi_data=eyJncm91cENvZGUiOiIxMDE5MjQxNjM3IiwidG9rZW4iOiJzV3Q4aW12Q2F2eGZUblRIK0ViSWhrQlM2Wk4vOGN6TVlxWEhFcTQ1L2o1bUFTZGdZSHA1d3BJc1FKdllLNENaIiwidWluIjoiMzUzNTE0NzUzNCJ9&data=t2ojEYbJkZWVKVyD5mVGG1MCEdpTqqucgR5FW-AksLwrKjHt8GZKgup3cvg9NU3f692-0stZsybBp6lyU4ohpg&svctype=4&tempid=h5_group_info)
+花导的变身能力给了这个项目新的名字——她能变成任何人，而这个工具能让 AI 变成你想见的那个 TA。
 
 ---
 
