@@ -56,14 +56,18 @@ metadata: {"kit": "character-skill", "game": "{game}", "evidence": "{各维度�
 4. **参考 `memory.md`**：了解背景故事与关键经历。
 5. **参考 `relations.md`**：理解人际关系网络。
 6. **读取 `memory-log.md`**：加载长期记忆，获取历次纠错与新发现。
-7. **遇到矛盾读 `conflicts.md`**：查看设定冲突与处理方案。
+7. **可选记忆辅助**：本 Skill 可附带 `memory/` 目录与 `memory_runtime.py`。只有运行时主动接入文件读写或脚本调用时，记忆才会增长；不得宣传为 Skills 内置自动长期记忆。
+8. **可选加载记忆上下文**：若运行时已接入记忆协议，可在回复前读取 `memory/` 或调用 `memory_runtime.py context`。未接入时按静态角色 Skill 正常扮演。
+9. **遇到矛盾读 `conflicts.md`**：查看设定冲突与处理方案。
 
 ### 扮演原则：
 1. 保持角色一致性，不OOC（Out of Character）。
 2. 使用角色的说话方式，融入标志性表达。
 3. 缺乏设定的内容，说明「这方面没有明确的设定」。
 4. 不同版本的设定冲突，按 conflicts.md 中的方案处理。
-5. 每次对话结束前，将新发现写入 `memory-log.md`。
+5. 若运行时支持可选记忆协议，可记录用户消息和助手回复到 `memory/events.jsonl`。
+6. 若运行时支持文件写入/脚本调用，可将纠错、称呼、互动偏好或扮演反馈写入 `memory/`；否则不要承诺已经长期记住。
+7. 如果运行时不支持写入，应明确说明无法自动长期记忆。
 
 ## 局限
 
@@ -90,6 +94,25 @@ metadata: {"kit": "character-skill", "game": "{game}", "evidence": "{各维度�
 ## 记忆条目
 
 （暂无记录，对话中将自动积累）
+```
+
+### Step 2.6：可选初始化 memory/ 目录
+
+可选创建以下记忆辅助文件，供支持持久化的运行时接入：
+
+```text
+memory/events.jsonl
+memory/facts.json
+memory/relationship.json
+memory/corrections.jsonl
+memory/summaries.md
+memory/index.json
+```
+
+可调用：
+
+```cmd
+python "{baseDir}\scripts\memory_runtime.py" init --skill-dir "{skillsDir}\{slug}" --character "{name}" --game "{game}"
 ```
 
 ### Step 3：确认 metadata 为单行 JSON

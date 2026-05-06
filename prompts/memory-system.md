@@ -1,78 +1,90 @@
-# Prompt：长期记忆系统
+# Prompt：可选记忆辅助协议
 
-> 每个角色skill携带独立的 `memory-log.md`，对话中自动积累，角色越聊越还原。
+> 注意：Skills 本身通常不保证全自动长期记忆写入。本文件只描述一个可选的文件协议与辅助 CLI，供支持文件写入或脚本调用的运行时接入。
 
-## 文件位置
+## 定位
 
-```
-skills/{slug}/memory-log.md
-```
+生成的角色 Skill 可以附带 `memory/` 目录和 `scripts/memory_runtime.py`，用于保存对话事件、偏好、纠错和摘要。
 
-## memory-log.md 结构
+但如果运行时没有主动读写这些文件，长期记忆不会自动生效。
 
-```markdown
-# {角色名} 长期记忆日志
+## 可选文件结构
 
-## 元数据
-- 角色：{name}
-- 游戏：{game}
-- 创建时间：{ISO 8601}
-- 最后更新：{ISO 8601}
-- 记录条数：{n}
-
-## 记忆条目
-
-### [{序号}] {标题}
-- 时间：{ISO 8601}
-- 类型：correction / discovery / feedback / impression
-- 维度：profile / personality / interaction / memory / relations
-- 内容：{具体内容}
-- 证据级别：verbatim / artifact / user_impression
-- 是否已写入skill：是 / 否
+```text
+memory/
+├── events.jsonl
+├── facts.json
+├── relationship.json
+├── corrections.jsonl
+├── summaries.md
+└── index.json
 ```
 
-## 触发时机
+`memory-log.md` 可作为人类可读记录保留，但不是必须依赖项。
 
-以下情况**自动**追加到 `memory-log.md`：
+## 适用条件
 
-| 触发 | 类型 | 说明 |
-|------|------|------|
-| 用户纠错并确认 | `correction` | 记录纠错内容和证据级别 |
-| 对话中发现新角色细节 | `discovery` | 用户提到的官方设定细节 |
-| 扮演测试反馈 | `feedback` | 测试中发现的OOC问题 |
-| 用户补充印象 | `impression` | 用户的主观理解（不覆盖官方） |
+至少满足其一：
 
-## 写入规则
+- 运行时允许读写 Skill 目录；
+- 运行时允许指定外部可写状态目录；
+- 运行时允许调用 Python 脚本；
+- 平台开发者按该文件结构自行实现持久化。
 
-1. **每次对话结束前**，扫描本次对话，提取新增的角色信息
-2. **去重**：与已有条目重复的不写入
-3. **分级**：`verbatim` / `artifact` 优先级高于 `user_impression`
-4. **已写入skill的条目**标注 `是否已写入skill: 是`
+如果程序只加载 `SKILL.md`，不支持任何持久化，则本协议不会自动工作。
 
-## 记忆应用
+## 最小接入示例
 
-加载角色skill时：
-1. 读取 `memory-log.md` 中**已写入skill**的条目，已反映在维度文件中
-2. 读取**未写入skill**的条目，作为补充上下文
-3. 对话中如发现新细节，追加到 `memory-log.md`
+记录用户消息：
 
-## 定期合并
-
-当 `memory-log.md` 条目数 ≥ 20 时，提示用户：
-
-```
-记忆日志已积累 {n} 条新信息，建议合并到skill文件以提升角色还原度。
-
-是否现在合并？
-  [A] 合并（将未写入的条目批量写入对应维度文件）
-  [B] 稍后
+```bash
+python3 scripts/memory_runtime.py record --skill-dir "../xiadie-skill" --role user --content "以后叫我小灰毛" --extract
 ```
 
-合并后将所有条目标注 `是否已写入skill: 是`。
+获取可注入上下文：
 
-## 自检
+```bash
+python3 scripts/memory_runtime.py context --skill-dir "../xiadie-skill" --query "你应该叫我什么" --recent 12
+```
 
-- [ ] 每次对话是否扫描并追加新发现？
-- [ ] 是否正确标注了证据级别？
-- [ ] 是否避免了重复条目？
-- [ ] 条目数 ≥ 20 时是否提示合并？
+记录助手回复：
+
+```bash
+python3 scripts/memory_runtime.py record --skill-dir "../xiadie-skill" --role assistant --content "我记住了。"
+```
+
+## 沙箱 / 只读目录
+
+如果 Skill 目录不可写，使用 `--memory-dir` 指向运行时提供的可写目录：
+
+```bash
+python3 scripts/memory_runtime.py record \
+  --skill-dir "/app/skills/xiadie-skill" \
+  --memory-dir "/app/state/xiadie-skill-memory" \
+  --role user \
+  --content "以后叫我小灰毛" \
+  --extract
+```
+
+也可以设置环境变量：
+
+```bash
+export SKILL_MEMORY_DIR="/app/state/xiadie-skill-memory"
+```
+
+## 自动提取范围
+
+`--extract` 只提供基础规则提取，可识别：
+
+- 用户希望被如何称呼；
+- 用户如何称呼角色；
+- “记住 / 别忘了”类显式记忆；
+- 喜好、边界、互动风格；
+- 纠错或 OOC 反馈。
+
+## 重要限制
+
+- 这不是 Skills 标准内置能力；
+- 不能保证所有程序自动写入；
+- 沙箱环境可能禁止写文件或执行脚本；
+- 若运行时没有接入，`memory/` 会保持初始化状态。

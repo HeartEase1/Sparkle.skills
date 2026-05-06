@@ -1,0 +1,39 @@
+{
+  "user": {
+    "preferred_names": [
+      {
+        "value": "小灰毛",
+        "confidence": 0.95,
+        "source_event_id": "bddfaa18-93fd-470d-9c86-742ef6abe9ca",
+        "updated_at": "2026-05-06T15:01:46+08:00"
+      }
+    ],
+    "disliked_names": [],
+    "profile": {},
+    "preferences": [],
+    "boundaries": [],
+    "projects": []
+  },
+  "character": {
+    "preferred_names": [],
+    "user_calls_character": [],
+    "style_preferences": [],
+    "corrections_pending_merge": []
+  },
+  "relationship": {
+    "stage": "unknown",
+    "tone": [],
+    "shared_history": [],
+    "important_events": []
+  },
+  "misc": {
+    "manual_memories": [
+      {
+        "value": "以后叫我小灰毛，记住我很在意长期记忆连续性",
+        "confidence": 0.8,
+        "source_event_id": "bddfaa18-93fd-470d-9c86-742ef6abe9ca",
+        "updated_at": "2026-05-06T15:01:46+08:00"
+      }
+    ]
+  }
+}
